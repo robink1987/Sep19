@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="391ec787-09f2-4b67-a5b7-9ff2937b7022" >
+		<http:listener-connection host="0.0.0.0" port="5005" />
+	</http:listener-config>
+	<flow name="flowFlow" doc:id="c2865a1e-ea37-4cba-995f-11c4848d844b" >
+		<http:listener doc:name="Listener" doc:id="55c32bad-8ac6-45ca-8b04-6f231e92b89a" config-ref="HTTP_Listener_config" path="/r"/>
+		<set-variable value="Robin" doc:name="Get firstname" doc:id="2d6c3423-5da5-4a49-9dcf-f70095e82243" variableName="fn"/>
+		<flow-ref doc:name="Flow Reference" doc:id="310e89ed-8202-4246-a68b-99a3014d42e4" name="flowFlow1" target="ln" targetValue="#[payload]"/>
+		<logger level="INFO" doc:name="Logger" doc:id="eca39aef-7865-4b28-a08f-7914375efe71" message='#[vars.fn ++" " ++ vars.ln]'/>
+		<set-payload value='#[vars.fn ++" " ++ vars.ln]' doc:name="Set Payload" doc:id="d16f2b2e-1da5-4a51-ad51-2e18450e9973" />
+	</flow>
+	<flow name="flowFlow1" doc:id="8defd1e4-a121-4b11-b6ea-06249cdb3c75">
+		<set-payload value="Koiralaa" doc:name="Set Payload" doc:id="c47fdddb-759f-46a4-8f33-c5bef8bb88e7" />
+		<set-variable value="Koirala" doc:name="Getlastname" doc:id="2ab642af-7d71-4de9-90d4-2ea99b030690" variableName="ln"/>
+	</flow>
+</mule>
